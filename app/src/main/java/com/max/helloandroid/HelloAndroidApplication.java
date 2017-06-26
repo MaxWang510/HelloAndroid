@@ -8,4 +8,21 @@ import android.app.Application;
  */
 
 public class HelloAndroidApplication extends Application {
+
+    private static HelloAndroidApplication helloAndroidApplication;
+
+    /**
+     * 获取Application实类
+     *
+     * @return
+     */
+    public static HelloAndroidApplication getInstance() {
+        return helloAndroidApplication;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        helloAndroidApplication = this;
+    }
 }

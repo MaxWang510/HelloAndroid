@@ -20,13 +20,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addActivity(this);
-        setContentView(getLayoutId());
+        onCreateBinding();
         initView();
         initEvent();
         loadData();
     }
 
-    protected abstract int getLayoutId();
+    protected abstract void onCreateBinding();
 
     protected abstract void initView();
 
