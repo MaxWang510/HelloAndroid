@@ -56,10 +56,9 @@ public class StartActivity extends BaseActivity {
                 runOnUiThread(new TimerTask() {
                     @Override
                     public void run() {
-                        CommonUtils.glideSetImgByURL(StartActivity.this, AppConstants.TRANSITION_URLS[tempSecond-1], startBinding.ivPicOne);
-                        tempSecond--;
-                        if (tempSecond == 0) {
-                            return;
+                        if (tempSecond > 0) {
+                            CommonUtils.glideSetImgByURL(StartActivity.this, AppConstants.TRANSITION_URLS[tempSecond-1], startBinding.ivPicOne);
+                            tempSecond--;
                         }
                     }
                 });
