@@ -2,10 +2,7 @@ package com.max.helloandroid.ui.view;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.max.helloandroid.R;
 import com.max.helloandroid.databinding.ActivityStartBinding;
@@ -42,37 +39,41 @@ public class StartActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        initCancelButton();
-        initImageView();
+        initCancelButton(mTimer);
+        initImageView(mTimer);
     }
 
-    private void initImageView() {
-        CommonUtils.glideSetImgByURL(this, AppConstants.TRANSITION_URLS[0], startBinding.ivPicOne);
-        Log.i("maxwang", "initImageView: "+AppConstants.TRANSITION_URLS[0]);
-        CommonUtils.glideSetImgByURL(this, AppConstants.TRANSITION_URLS[1], startBinding.ivPicTwo);
-        hideImageView(startBinding.ivPicTwo);
-        CommonUtils.glideSetImgByURL(this, AppConstants.TRANSITION_URLS[2], startBinding.ivPicThree);
-        hideImageView(startBinding.ivPicThree);
-        CommonUtils.glideSetImgByURL(this, AppConstants.TRANSITION_URLS[3], startBinding.ivPicFour);
-        hideImageView(startBinding.ivPicFour);
-    }
+    private void initImageView(Timer timer) {
+        if (null != timer) {
+            timer.cancel();
+        }
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            int tempSecond = 3;
 
-    private void hideImageView(final ImageView imageview) {
-        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                imageview.setVisibility(View.GONE);
+                runOnUiThread(new TimerTask() {
+                    @Override
+                    public void run() {
+                        CommonUtils.glideSetImgByURL(StartActivity.this, AppConstants.TRANSITION_URLS[tempSecond-1], startBinding.ivPicOne);
+                        tempSecond--;
+                        if (tempSecond == 0) {
+                            return;
+                        }
+                    }
+                });
             }
-        }, 1500);
+        }, 0, 1900);
     }
 
-    private void initCancelButton() {
-        if (null != mTimer) {
-            mTimer.cancel();
+    private void initCancelButton(Timer timer) {
+        if (null != timer) {
+            timer.cancel();
         }
-        mTimer = new Timer();
-        mTimer.schedule(new TimerTask() {
-            int curSecond = 10;
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            int curSecond = 5;
 
             @Override
             public void run() {
@@ -106,7 +107,6 @@ public class StartActivity extends BaseActivity {
         startBinding.tvJump.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("maxwang", "onClick: ++++++++++");
                 enterMainActivity();
             }
         });
