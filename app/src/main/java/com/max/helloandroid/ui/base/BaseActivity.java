@@ -1,9 +1,11 @@
 package com.max.helloandroid.ui.base;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +21,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addActivity(this);
+        setWindowFlags();
         onCreateBinding();
         initView();
         initEvent();
         loadData();
+        addActivity(this);
     }
 
     protected abstract void onCreateBinding();
@@ -40,6 +43,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         removeActivity(this);
     }
 
+    /**
+     * 设置窗体属性（如：无titlebar等）
+     */
+    public void setWindowFlags() {
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
 
     // 添加Activity到容器中
     private void addActivity(Activity activity) {
