@@ -65,6 +65,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    protected Boolean isExistActivity(Activity activity) {
+        if (activity != null && activities.contains(activity)) {
+            return true;
+        }
+        return false;
+    }
+
     // 退出整个APP
     public static void exit() {
         if (activities != null && activities.size() > 0) {

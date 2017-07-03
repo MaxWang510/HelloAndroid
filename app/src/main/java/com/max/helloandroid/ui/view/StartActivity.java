@@ -22,9 +22,6 @@ public class StartActivity extends BaseActivity {
     private ActivityStartBinding startBinding;
     private Timer mTimer;
     private boolean isIn;
-    private ImageView imageView;
-    private String thumbUrl = "http://att.191.cn/attachment/Mon_1012/63_5974_9775edfdf2ca75a.jpg";
-    private Boolean isShowImages = false;
 
     @Override
     protected void onCreateBinding() {
@@ -59,14 +56,16 @@ public class StartActivity extends BaseActivity {
                 runOnUiThread(new TimerTask() {
                     @Override
                     public void run() {
-                        if (tempSecond > 0) {
-                            CommonUtils.glideSetImgByURL(StartActivity.this, AppConstants.TRANSITION_URLS[tempSecond-1], startBinding.ivPicOne);
-                            tempSecond--;
+                        if(isExistActivity(StartActivity.this)){
+                            CommonUtils.glideSetImgByURL(StartActivity.this, AppConstants.TRANSITION_URLS[tempSecond], startBinding.ivPicOne);
+                            if(tempSecond > 0){
+                                tempSecond --;
+                            }
                         }
                     }
                 });
             }
-        }, 1000);
+        }, 1200);
     }
 
     private void initCancelButton(Timer timer) {
@@ -84,7 +83,6 @@ public class StartActivity extends BaseActivity {
                     @Override
                     public void run() {
                         startBinding.tvJump.setText(curSecond + "秒后关闭");
-                        CommonUtils.glideSetImgByURL(StartActivity.this, AppConstants.TRANSITION_URLS[curSecond - 1], startBinding.ivPicOne);
                         curSecond--;
                         if (curSecond == 0) {
                             enterMainActivity();
