@@ -2,9 +2,7 @@ package com.max.helloandroid.ui.view;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Handler;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.max.helloandroid.R;
 import com.max.helloandroid.databinding.ActivityStartBinding;
@@ -44,62 +42,41 @@ public class StartActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        initCancelButton();
-        initImageView();
+        initCancelButton(mTimer);
+        initImageView(mTimer);
     }
 
-    private void initImageView() {
-//        CommonUtils.glideSetImgByURL(this, AppConstants.TRANSITION_URLS[0], startBinding.ivPicOne);
-//
-//        new Handler().postDelayed(new Runnable() {//在当前线程（也即主线程中）开启一个消息处理器，并在3秒后在主线程中执行，从而来更新UI
-//            @Override
-//            public void run() {
-//                //有关更新UI的代码
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        try {
-//                            Thread.sleep(300);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//            }
-//        }, 1000);
+    private void initImageView(Timer timer) {
+        if (null != timer) {
+            timer.cancel();
+        }
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            int tempSecond = 3;
 
-
-//        hideImageView(startBinding.ivPicOne);
-//        CommonUtils.glideSetImgByURL(this, AppConstants.TRANSITION_URLS[1], startBinding.ivPicTwo);
-//        hideImageView(startBinding.ivPicTwo);
-//        CommonUtils.glideSetImgByURL(this, AppConstants.TRANSITION_URLS[2], startBinding.ivPicThree);
-//        showImageView(startBinding.ivPicThree);
-//        hideImageView(startBinding.ivPicThree);
-//        CommonUtils.glideSetImgByURL(this, AppConstants.TRANSITION_URLS[3], startBinding.ivPicFour);
-//        showImageView(startBinding.ivPicFour);
-//        hideImageView(startBinding.ivPicFour);
-    }
-
-    private void hideImageView(final ImageView imageview) {
-        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                imageview.setVisibility(View.GONE);
+                runOnUiThread(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (tempSecond > 0) {
+                            CommonUtils.glideSetImgByURL(StartActivity.this, AppConstants.TRANSITION_URLS[tempSecond-1], startBinding.ivPicOne);
+                            tempSecond--;
+                        }
+                    }
+                });
             }
         }, 1000);
     }
 
-    private void showImageView(final ImageView imageview) {
-        imageview.setVisibility(View.VISIBLE);
-    }
-
-    private void initCancelButton() {
-        if (null != mTimer) {
-            mTimer.cancel();
+    private void initCancelButton(Timer timer) {
+        if (null != timer) {
+            timer.cancel();
         }
-        mTimer = new Timer();
-        mTimer.schedule(new TimerTask() {
-            int curSecond = 4;
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            int curSecond = 5;
 
             @Override
             public void run() {

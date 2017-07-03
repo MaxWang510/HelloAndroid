@@ -6,33 +6,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <ImageView
             android:id="@+id/iv_pic_one"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY" />
-
-
-        <ImageView
-            android:id="@+id/iv_pic_two"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY" />
-
-        <ImageView
-            android:id="@+id/iv_pic_three"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/iv_pic_four"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_jump"
