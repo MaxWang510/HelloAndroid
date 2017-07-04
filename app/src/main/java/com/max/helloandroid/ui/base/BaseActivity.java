@@ -5,10 +5,15 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.Window;
+
+import com.max.helloandroid.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by WangHuaGui on 2017/6/23 14:06
@@ -80,5 +85,44 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
         System.exit(0);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == event.KEYCODE_BACK) {
+            exitBy2Click();
+        }
+        return false;
+    }
+
+    /**
+     * 双击退出运用
+     */
+    private Boolean isExit = false;
+
+    private void exitBy2Click() {
+        Timer tExit = null;
+        if (isExit == false) {
+            isExit = true; // 准备退出
+            showToast("再按一次退出程序");
+            tExit = new Timer();
+            tExit.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isExit = false; // 取消退出
+                }
+            }, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
+        } else {
+            BaseActivity.exit();
+        }
+    }
+
+    /**
+     * 显示Toast
+     *
+     * @param str
+     */
+    public void showToast(String str) {
+        CommonUtils.showToast(str);
     }
 }
