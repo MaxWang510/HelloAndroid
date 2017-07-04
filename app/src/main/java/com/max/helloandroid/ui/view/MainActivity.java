@@ -46,16 +46,16 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
         mainBinding.bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         mainBinding.bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         mainBinding.bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.mipmap.ico_news_clicked, "窗外")
+                .addItem(new BottomNavigationItem(R.mipmap.ico_news_clicked, getString(R.string.news))
                         .setInactiveIconResource(R.mipmap.ico_news_normal)
                 )
-                .addItem(new BottomNavigationItem(R.mipmap.ico_reading_clicked, "悦读")
+                .addItem(new BottomNavigationItem(R.mipmap.ico_reading_clicked, getString(R.string.reading))
                         .setInactiveIconResource(R.mipmap.ico_reading_normal)
                 )
-                .addItem(new BottomNavigationItem(R.mipmap.ico_music_clicked, "旋律")
+                .addItem(new BottomNavigationItem(R.mipmap.ico_music_clicked, getString(R.string.music))
                         .setInactiveIconResource(R.mipmap.ico_music_normal)
                 )
-                .addItem(new BottomNavigationItem(R.mipmap.ico_video_clicked, "眼界")
+                .addItem(new BottomNavigationItem(R.mipmap.ico_video_clicked, getString(R.string.video))
                         .setInactiveIconResource(R.mipmap.ico_video_normal)
                 )
                 .initialise();

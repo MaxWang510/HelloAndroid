@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">HelloAndroid</string>
+    <string name="news">窗外</string>
+    <string name="reading">悦读</string>
+    <string name="music">旋律</string>
+    <string name="video">眼界</string>
 </resources>
