@@ -46,18 +46,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
         mainBinding.bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         mainBinding.bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         mainBinding.bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.mipmap.ico_news_clicked, getString(R.string.news))
-                        .setInactiveIconResource(R.mipmap.ico_news_normal)
-                )
-                .addItem(new BottomNavigationItem(R.mipmap.ico_reading_clicked, getString(R.string.reading))
-                        .setInactiveIconResource(R.mipmap.ico_reading_normal)
-                )
-                .addItem(new BottomNavigationItem(R.mipmap.ico_music_clicked, getString(R.string.music))
-                        .setInactiveIconResource(R.mipmap.ico_music_normal)
-                )
-                .addItem(new BottomNavigationItem(R.mipmap.ico_video_clicked, getString(R.string.video))
-                        .setInactiveIconResource(R.mipmap.ico_video_normal)
-                )
+                .addItem(new BottomNavigationItem(R.mipmap.ico_news_normal, getString(R.string.news)))
+                .addItem(new BottomNavigationItem(R.mipmap.ico_reading_normal, getString(R.string.reading)))
+                .addItem(new BottomNavigationItem(R.mipmap.ico_music_normal, getString(R.string.music)))
+                .addItem(new BottomNavigationItem(R.mipmap.ico_video_normal, getString(R.string.video)))
                 .initialise();
     }
 
