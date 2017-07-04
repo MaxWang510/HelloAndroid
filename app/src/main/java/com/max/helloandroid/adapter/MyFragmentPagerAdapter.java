@@ -13,17 +13,10 @@ import java.util.ArrayList;
 
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] fragmentTitles;
     private ArrayList<Fragment> fragmentList;
 
-    public MyFragmentPagerAdapter(FragmentManager fm, String[] fragmentTitles, ArrayList<Fragment> fragmentList) {
+    public MyFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragmentList) {
         super(fm);
-        this.fragmentTitles = fragmentTitles;
-        this.fragmentList = fragmentList;
-    }
-
-    public void updateData(String[] fragmentTitles, ArrayList<Fragment> fragmentList) {
-        this.fragmentTitles = fragmentTitles;
         this.fragmentList = fragmentList;
     }
 
@@ -34,11 +27,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return fragmentTitles.length;
+        return fragmentList.size();
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return fragmentTitles[position];
-    }
 }

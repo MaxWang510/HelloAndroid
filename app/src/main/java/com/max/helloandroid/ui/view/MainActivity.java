@@ -2,9 +2,12 @@ package com.max.helloandroid.ui.view;
 
 import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.max.helloandroid.R;
 import com.max.helloandroid.adapter.MyFragmentPagerAdapter;
 import com.max.helloandroid.databinding.ActivityMainBinding;
@@ -12,9 +15,9 @@ import com.max.helloandroid.ui.base.BaseActivity;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements BottomNavigationBar
+        .OnTabSelectedListener, ViewPager.OnPageChangeListener {
     private ActivityMainBinding mainBinding;
-    private String[] fragmentTitles;
     private ArrayList<Fragment> fragmentList;
     private MyFragmentPagerAdapter myFragmentPagerAdapter;
 
@@ -25,30 +28,49 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        fragmentTitles = new String[]{"窗外", "悦读", "旋律", "眼界"};
-        initFragments();
-        myFragmentPagerAdapter = new MyFragmentPagerAdapter(this.getSupportFragmentManager(), fragmentTitles, fragmentList);
+        fragmentList = new ArrayList<>();
     }
 
     @Override
     protected void initView() {
         initToolbar((Toolbar) mainBinding.includeToolbar.findViewById(R.id.toolbar), "主页");
         initViewPager();
+        initBottomNavigationBar();
+    }
+
+    private void initBottomNavigationBar() {
+        mainBinding.bottomNavigationBar.setTabSelectedListener(this);
+        mainBinding.bottomNavigationBar.clearAll();
+        mainBinding.bottomNavigationBar.setActiveColor(R.color.colorNavigationBar);
+        mainBinding.bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
+        mainBinding.bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
+        mainBinding.bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
+        mainBinding.bottomNavigationBar
+                .addItem(new BottomNavigationItem(R.mipmap.ico_news_clicked, "窗外")
+                        .setInactiveIconResource(R.mipmap.ico_news_normal)
+                )
+                .addItem(new BottomNavigationItem(R.mipmap.ico_reading_clicked, "悦读")
+                        .setInactiveIconResource(R.mipmap.ico_reading_normal)
+                )
+                .addItem(new BottomNavigationItem(R.mipmap.ico_music_clicked, "旋律")
+                        .setInactiveIconResource(R.mipmap.ico_music_normal)
+                )
+                .addItem(new BottomNavigationItem(R.mipmap.ico_video_clicked, "眼界")
+                        .setInactiveIconResource(R.mipmap.ico_video_normal)
+                )
+                .initialise();
     }
 
     private void initViewPager() {
+        initFragments();
+        myFragmentPagerAdapter = new MyFragmentPagerAdapter(this.getSupportFragmentManager(), fragmentList);
         mainBinding.viewPager.setAdapter(myFragmentPagerAdapter);
-        mainBinding.tabLayout.setupWithViewPager(mainBinding.viewPager);
-
-        mainBinding.tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
-        mainBinding.tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);
-        mainBinding.tabLayout.getTabAt(2).setIcon(R.mipmap.ic_launcher);
-        mainBinding.tabLayout.getTabAt(3).setIcon(R.mipmap.ic_launcher);
+        mainBinding.viewPager.addOnPageChangeListener(this);
+        mainBinding.viewPager.setCurrentItem(0);
     }
 
-    private void initFragments() {
-        fragmentList = new ArrayList<>();
 
+    private void initFragments() {
         NewsFragment newsFragment = new NewsFragment();
         ReadingFragment readingFragment = new ReadingFragment();
         MusicFragment musicFragment = new MusicFragment();
@@ -78,5 +100,35 @@ public class MainActivity extends BaseActivity {
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_arrow_back);
             actionBar.setTitle(toolbarName);
         }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        mainBinding.bottomNavigationBar.selectTab(position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void onTabSelected(int position) {
+        mainBinding.viewPager.setCurrentItem(position);
+    }
+
+    @Override
+    public void onTabUnselected(int position) {
+
+    }
+
+    @Override
+    public void onTabReselected(int position) {
+
     }
 }
