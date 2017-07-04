@@ -56,16 +56,16 @@ public class StartActivity extends BaseActivity {
                 runOnUiThread(new TimerTask() {
                     @Override
                     public void run() {
-                        if(isExistActivity(StartActivity.this)){
-                            CommonUtils.glideSetImgByURL(StartActivity.this, AppConstants.TRANSITION_URLS[tempSecond], startBinding.ivPicOne);
-                            if(tempSecond > 0){
-                                tempSecond --;
+                        if (isExistActivity(StartActivity.this)) {
+                            CommonUtils.glideSetImgByURL(StartActivity.this, AppConstants.BACKGROUND_IMAGE[tempSecond], startBinding.ivPicOne);
+                            if (tempSecond > 0) {
+                                tempSecond--;
                             }
                         }
                     }
                 });
             }
-        }, 1200);
+        }, 0, 1200);
     }
 
     private void initCancelButton(Timer timer) {

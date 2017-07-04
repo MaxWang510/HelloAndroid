@@ -10,13 +10,11 @@ public class AppConstants {
 
 
     // 过渡图的图片链接
-    private static final String TRANSITION_URL_01 = "http://47.52.22.9:9191/pictures/20170420153219tcJOi9.png";
-    private static final String TRANSITION_URL_02 = "http://47.52.22.9:9191/pictures/20170420153219dgpdTc.png";
-    private static final String TRANSITION_URL_03 = "http://47.52.22.9:9191/pictures/20170420153219Hz7rku.png";
-    private static final String TRANSITION_URL_04 = "http://47.52.22.9:9191/pictures/20170420153219ATi7qv.png";
+    private static final String BACKGROUND_IMAGE_01 = "http://pic.ffpic.com/files/2014/0217/0216qxszgqsjbz4.jpg";
+    private static final String BACKGROUND_IMAGE_02 = "http://pic1.win4000.com/mobile/e/5209a6bc96d00.jpg";
+    private static final String BACKGROUND_IMAGE_03 = "http://pic1.win4000.com/mobile/c/5230049bc7a60.jpg";
+    private static final String BACKGROUND_IMAGE_04 = "http://f2.dn.anqu.com/down/YTRmZQ==/allimg/1308/54-130R1093143.jpg";
 
-    public static final String[] TRANSITION_URLS = new String[]{
-            TRANSITION_URL_01, TRANSITION_URL_02, TRANSITION_URL_03
-            , TRANSITION_URL_04
-    };
+    public static final String[] BACKGROUND_IMAGE = new String[]{
+            BACKGROUND_IMAGE_01, BACKGROUND_IMAGE_02, BACKGROUND_IMAGE_03, BACKGROUND_IMAGE_04};
 }

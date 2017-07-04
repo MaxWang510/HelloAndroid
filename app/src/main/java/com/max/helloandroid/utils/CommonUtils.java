@@ -18,7 +18,7 @@ public class CommonUtils {
         Glide.with(context)
                 .load(imageUrl)
                 .placeholder(R.mipmap.img_bg_default)
-                .error(R.mipmap.error)
+                .error(R.mipmap.img_bg_default)
                 .centerCrop()
                 .crossFade()
                 .into(imageView);
