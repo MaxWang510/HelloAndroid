@@ -23,9 +23,15 @@ public class StartActivity extends BaseActivity {
     private Timer mTimer;
     private boolean isIn;
 
+
     @Override
     protected void onCreateBinding() {
         startBinding = DataBindingUtil.setContentView(this, R.layout.activity_start);
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     @Override

@@ -28,11 +28,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setWindowFlags();
         onCreateBinding();
+        initData();
         initView();
-        initEvent();
         loadData();
+        initEvent();
         addActivity(this);
     }
+
+    protected abstract void initData();
 
     protected abstract void onCreateBinding();
 
