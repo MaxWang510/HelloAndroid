@@ -1,5 +1,8 @@
 package com.max.helloandroid.ui.view;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
 import com.max.helloandroid.R;
 import com.max.helloandroid.ui.base.BaseFragment;
 
@@ -13,5 +16,10 @@ public class NewsFragment extends BaseFragment {
     @Override
     public int setContent() {
         return R.layout.fragment_news;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 }

@@ -40,8 +40,8 @@ public class CommonUtils {
     public static void glideSetImgByURL(Context context, String imageUrl, ImageView imageView) {
         Glide.with(context)
                 .load(imageUrl)
-                .placeholder(R.mipmap.img_bg_default)
-                .error(R.mipmap.img_bg_default)
+                .placeholder(R.mipmap.im_bg_default)
+                .error(R.mipmap.im_bg_default)
                 .centerCrop()
                 .crossFade()
                 .into(imageView);

@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(false);
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_arrow_back);
+            actionBar.setHomeAsUpIndicator(R.mipmap.ico_arrow_back);
             actionBar.setTitle(toolbarName);
         }
     }
