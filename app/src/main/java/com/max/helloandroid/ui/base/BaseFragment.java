@@ -23,6 +23,8 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
     protected RelativeLayout mContainer;
     private CustomProgressBar mCustomProgressBar;
     private LinearLayout mErrorRefresh;
+    // fragment是否显示了
+    protected boolean mIsVisible = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +35,33 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
         mContainer = (RelativeLayout) ll.findViewById(R.id.container);
         mContainer.addView(bindingView.getRoot());
         return ll;
+    }
+
+    /**
+     * 在这里实现Fragment数据的懒缓加载.
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint()) {
+            mIsVisible = true;
+            onVisible();
+        } else {
+            mIsVisible = false;
+            onInvisible();
+        }
+    }
+
+    protected void onInvisible() {
+
+    }
+
+    protected void onVisible() {
+        loadData();
+    }
+
+    protected void loadData() {
+
     }
 
 
