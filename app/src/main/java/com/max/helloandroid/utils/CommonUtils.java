@@ -25,14 +25,14 @@ public class CommonUtils {
         Toast toast = null;
         if (toast == null) {
             toast = Toast.makeText(HelloAndroidApplication.getInstance(), string, Toast.LENGTH_SHORT);
-        } else {
-            toast.setText(string);
         }
+        toast.setText(string);
         toast.show();
     }
 
     /**
      * Glide显示图片
+     *
      * @param context
      * @param imageUrl
      * @param imageView
