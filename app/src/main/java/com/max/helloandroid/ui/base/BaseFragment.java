@@ -79,8 +79,16 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
             @Override
             protected void onNoRepeatClick(View v) {
                 showLoading();
+                onRefresh();
             }
         });
+    }
+
+    /**
+     * 加载失败后刷新
+     */
+    protected void onRefresh() {
+
     }
 
     protected <T extends View> T getView(int id) {

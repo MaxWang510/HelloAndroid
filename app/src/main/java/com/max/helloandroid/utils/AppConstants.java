@@ -8,7 +8,7 @@ package com.max.helloandroid.utils;
 
 public class AppConstants {
 
-    public final static String BaseUrl = "https://api.huaban.com/";
+    public final static String BaseUrl = "http://c.m.163.com/";
     // 过渡图的图片链接
     private static final String BACKGROUND_IMAGE_01 = "http://pic.ffpic.com/files/2014/0217/0216qxszgqsjbz4.jpg";
     private static final String BACKGROUND_IMAGE_02 = "http://pic1.win4000.com/mobile/e/5209a6bc96d00.jpg";
