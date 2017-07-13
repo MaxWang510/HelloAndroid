@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 /**
  * Created by WangHuaGui on 2017/7/4 13:46
- * E-Mail Address：wanghuagui@vtotem.com
  */
 
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {

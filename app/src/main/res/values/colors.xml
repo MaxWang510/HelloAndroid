@@ -5,4 +5,11 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorNavigationBar">#2c2c2c</color>
     <color name="colorViewPager">#ececee</color>
+    <color name="black">#000</color>
+
+    <!-- 白色 -->
+    <color name="white">#ffffff</color>
+    <!-- 暗灰色 -->
+    <color name="darkGray">#a9a9a9</color>
+
 </resources>

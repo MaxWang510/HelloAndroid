@@ -16,6 +16,9 @@ import com.max.helloandroid.ui.customview.CustomProgressBar;
 import com.max.helloandroid.utils.CommonUtils;
 import com.max.helloandroid.utils.NoRepeatClickListener;
 
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
+
 public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment {
     // 布局view
     protected SV bindingView;
@@ -25,6 +28,7 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
     private LinearLayout mErrorRefresh;
     // fragment是否显示了
     protected boolean mIsVisible = false;
+    private CompositeSubscription mCompositeSubscription;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -147,6 +151,34 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
         }
         if (bindingView.getRoot().getVisibility() != View.GONE) {
             bindingView.getRoot().setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 添加订阅
+     * @param s
+     */
+    public void addSubscription(Subscription s) {
+        if (this.mCompositeSubscription == null) {
+            this.mCompositeSubscription = new CompositeSubscription();
+        }
+        this.mCompositeSubscription.add(s);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (this.mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
+            this.mCompositeSubscription.unsubscribe();
+        }
+    }
+
+    /**
+     * 解除订阅
+     */
+    public void removeSubscription() {
+        if (this.mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
+            this.mCompositeSubscription.unsubscribe();
         }
     }
 }

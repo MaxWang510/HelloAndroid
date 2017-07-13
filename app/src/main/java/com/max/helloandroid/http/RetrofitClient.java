@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitClient {
-    private final static int DEFAULT_TIMEOUT = 10;
+    private final static int DEFAULT_TIMEOUT = 5;
 
     private final static HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.HEADERS);

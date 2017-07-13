@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_news_three_image_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical">
+    <!--新闻列表单张大图的情况-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <!--<ImageView-->
+            <!--android:id="@+id/big_Image"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="150dp"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:src="@mipmap/im_default_bg" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/item_news_tv_title"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_alignBottom="@+id/big_Image"-->
+        <!--android:background="@drawable/shadow"-->
+        <!--android:ellipsize="end"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:maxLines="1"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingRight="10dp"-->
+        <!--android:text="新闻列表单张大图标题显示"-->
+        <!--android:textColor="@color/white" />-->
+
+    </RelativeLayout>
+
+
+    <!--<include layout="@layout/item_news_bottom" />-->
+
+</LinearLayout>

@@ -2,15 +2,21 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <cn.bingoogolapple.bgabanner.BGABanner
-        android:id="@+id/header_banner"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="fitXY"
-        app:banner_indicatorGravity="bottom|right"
-        app:banner_pageChangeDuration="1500"
-        app:banner_pointContainerBackground="@mipmap/im_banner_point_bg"
-        app:banner_pointDrawable="@drawable/bga_banner_selector_point"
-        app:banner_tipTextSize="12sp" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <cn.bingoogolapple.bgabanner.BGABanner
+            android:id="@+id/header_banner"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            app:banner_indicatorGravity="bottom|right"
+            app:banner_pageChangeDuration="1500"
+            app:banner_pointContainerBackground="@mipmap/im_banner_point_bg"
+            app:banner_pointDrawable="@drawable/bga_banner_selector_point"
+            app:banner_tipTextSize="12sp" />
+    </LinearLayout>
 </layout>
 

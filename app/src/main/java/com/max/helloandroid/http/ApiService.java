@@ -1,6 +1,6 @@
 package com.max.helloandroid.http;
 
-import com.max.helloandroid.bean.NewsListBean;
+import com.max.helloandroid.bean.NewsBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -16,6 +16,6 @@ public interface ApiService {
      * 获取新闻列表
      */
     @GET("nc/article/headline/T1348647909107/{startIndex}-20.html")
-    Observable<NewsListBean> getNewsList(@Path("startIndex") int startIndex);
+    Observable<NewsBean> getNews(@Path("startIndex") int startIndex);
 
 }

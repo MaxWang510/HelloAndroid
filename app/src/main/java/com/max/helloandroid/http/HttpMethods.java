@@ -1,6 +1,6 @@
 package com.max.helloandroid.http;
 
-import com.max.helloandroid.bean.NewsListBean;
+import com.max.helloandroid.bean.NewsBean;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -23,13 +23,13 @@ public class HttpMethods {
         return httpMethods;
     }
 
-    public void loadNewsList(Subscriber<NewsListBean> subscriber, int startIndex) {
-        Observable observable = RetrofitClient.createService(ApiService.class).getNewsList(startIndex)
-                .map(new Func1<NewsListBean, NewsListBean>() {
+    public void loadNews(Subscriber<NewsBean> subscriber, int startIndex) {
+        Observable observable = RetrofitClient.createService(ApiService.class).getNews(startIndex)
+                .map(new Func1<NewsBean, NewsBean>() {
 
                     @Override
-                    public NewsListBean call(NewsListBean newsListBean) {
-                        return newsListBean;
+                    public NewsBean call(NewsBean newsBean) {
+                        return newsBean;
                     }
                 });
 

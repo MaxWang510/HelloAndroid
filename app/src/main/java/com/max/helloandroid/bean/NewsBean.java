@@ -8,7 +8,7 @@ import java.util.List;
  * Created by WangHuaGui on 2017/7/12 10:57
  */
 
-public class NewsListBean {
+public class NewsBean {
     @SerializedName("T1348647909107")
     private List<HeadLineBean> headLineBean;
 
