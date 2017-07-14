@@ -34,8 +34,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
     @Override
     protected void initView() {
         initToolbar((Toolbar) mainBinding.includeToolbar.findViewById(R.id.toolbar), "主页");
-        initViewPager();
         initBottomNavigationBar();
+        initViewPager();
     }
 
     private void initBottomNavigationBar() {
@@ -58,6 +58,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
         myFragmentPagerAdapter = new MyFragmentPagerAdapter(this.getSupportFragmentManager(), fragmentList);
         mainBinding.viewPager.setAdapter(myFragmentPagerAdapter);
         mainBinding.viewPager.addOnPageChangeListener(this);
+        mainBinding.viewPager.setOffscreenPageLimit(2);
         mainBinding.viewPager.setCurrentItem(0);
     }
 

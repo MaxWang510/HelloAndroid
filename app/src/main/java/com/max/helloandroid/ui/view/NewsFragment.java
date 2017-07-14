@@ -94,8 +94,8 @@ public class NewsFragment extends BaseFragment<FragmentNewsBinding> implements B
         bindingView.newsRecyclerView.setLoadingMoreEnabled(false);
         if (mHeaderView == null) {
             mHeaderView = mHeaderBinding.getRoot();
-            bindingView.newsRecyclerView.addHeaderView(mHeaderView);
         }
+        bindingView.newsRecyclerView.addHeaderView(mHeaderView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         bindingView.newsRecyclerView.setLayoutManager(layoutManager);
