@@ -41,6 +41,7 @@ public class NewsViewModel {
         newsSubscriber = new Subscriber<NewsBean>() {
             @Override
             public void onCompleted() {
+
             }
 
             @Override
@@ -50,24 +51,6 @@ public class NewsViewModel {
 
             @Override
             public void onNext(NewsBean newsBean) {
-//                bannerHeadLineList.clear();
-//                headLineBeanList.clear();
-//                int newsSize = newsListBean.getHeadLineBean().size();
-//                for (int i = 0; i < newsSize; i++) {
-//                    NewsListBean.HeadLineBean headlineBean = newsListBean.getHeadLineBean().get(i);
-//                    if (null != headlineBean) {
-//                        headLineBeanList.add(headlineBean);
-//                    }
-//                }
-//
-//                for (NewsListBean.HeadLineBean headLineBean : headLineBeanList) {
-//                    if (null != headLineBean.getAds() && headLineBean.getAds().size() > 0) {
-//                        bannerHeadLineList.add(headLineBean);
-//                        headLineBeanList.remove(headLineBean);
-//                    }
-//                }
-//                LogUtil.print("+++++++++++bannerHeadLineList.size=" + bannerHeadLineList.size());
-//                LogUtil.print("+++++++++++headLineBeanList.size=" + headLineBeanList.size());
                 requestListener.loadSuccess(newsBean);
             }
 

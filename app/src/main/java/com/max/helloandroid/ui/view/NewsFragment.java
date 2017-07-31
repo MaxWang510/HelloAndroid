@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.max.helloandroid.R;
 import com.max.helloandroid.adapter.NewsListAdapter;
 import com.max.helloandroid.bean.NewsBean;
@@ -33,17 +34,19 @@ import rx.Subscription;
  * E-Mail Address：wanghuagui@vtotem.com
  */
 
-public class NewsFragment extends BaseFragment<FragmentNewsBinding> implements BGABanner.Adapter<ImageView, String>, BGABanner.Delegate<ImageView, String>, NewsListAdapter.OnItemClickListener {
+public class NewsFragment extends BaseFragment<FragmentNewsBinding> implements BGABanner.Adapter<ImageView, String>, BGABanner.Delegate<ImageView, String>, NewsListAdapter.OnItemClickListener, XRecyclerView.LoadingListener {
     private BannerBinding mHeaderBinding;
     private View mHeaderView;
     private boolean mIsPrepared = false;
     private NewsViewModel mNewsViewModel;
-    private NewsBean mNewsBean;
     private List<NewsBean.HeadLineBean> mHeadLineList;
+    private List<NewsBean.HeadLineBean> mLoadMoreHeadLineList;
     private List<NewsBean.HeadLineBean> mBannerList;
     private List<String> bannerImages;
     private List<String> bannerTitles;
     private NewsListAdapter mNewsListAdapter;
+    private int mStartIndex = 0;    // 请求数据的起始参数
+    private Boolean isFreshOrLoadError = false;
 
 
     @Override
@@ -90,8 +93,6 @@ public class NewsFragment extends BaseFragment<FragmentNewsBinding> implements B
     }
 
     private void initRecyclerView() {
-        bindingView.newsRecyclerView.setPullRefreshEnabled(false);
-        bindingView.newsRecyclerView.setLoadingMoreEnabled(false);
         if (mHeaderView == null) {
             mHeaderView = mHeaderBinding.getRoot();
         }
@@ -99,11 +100,15 @@ public class NewsFragment extends BaseFragment<FragmentNewsBinding> implements B
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         bindingView.newsRecyclerView.setLayoutManager(layoutManager);
+        //上拉刷新，下拉加载
+        bindingView.newsRecyclerView.setLoadingListener(this);
+        bindingView.newsRecyclerView.setPullRefreshEnabled(true);
+        bindingView.newsRecyclerView.setLoadingMoreEnabled(true);
         // 需加，不然滑动不流畅
         bindingView.newsRecyclerView.setNestedScrollingEnabled(false);
         bindingView.newsRecyclerView.setHasFixedSize(false);
         bindingView.newsRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        bindingView.newsRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        bindingView.newsRecyclerView.setRefreshProgressStyle(ProgressStyle.BallGridPulse);
         bindingView.newsRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
     }
 
@@ -126,37 +131,17 @@ public class NewsFragment extends BaseFragment<FragmentNewsBinding> implements B
         mNewsViewModel.loadNews(0, new RequestCallBack() {
             @Override
             public void loadSuccess(Object object) {
+                if (isFreshOrLoadError) {
+                    bindingView.newsRecyclerView.refreshComplete();
+                    bindingView.newsRecyclerView.loadMoreComplete();
+                }
                 showContent();
-                mNewsBean = (NewsBean) object;
-
-                int size = mNewsBean.getHeadLineBean().size();
-                if (null == mHeadLineList) {
-                    mHeadLineList = new ArrayList<NewsBean.HeadLineBean>();
-                } else {
-                    mHeadLineList.clear();
+                NewsBean mNewsBean = (NewsBean) object;
+                if (null != mNewsBean) {
+                    setNewsList(mNewsBean);
+                    setAdapter();
+                    initBannerImage();
                 }
-
-                for (int i = 0; i < size; i++) {
-                    NewsBean.HeadLineBean headLineBean = mNewsBean.getHeadLineBean().get(i);
-                    if (null != headLineBean) {
-                        mHeadLineList.add(headLineBean);
-                    }
-                }
-
-                if (null != mHeadLineList && mHeadLineList.size() > 0) {
-                    for (NewsBean.HeadLineBean headLineBean : mHeadLineList) {
-                        if (null != headLineBean && null != headLineBean.getAds() && headLineBean.getAds().size() > 0) {
-                            if (null == mBannerList) {
-                                mBannerList = new ArrayList<NewsBean.HeadLineBean>();
-                            } else {
-                                mBannerList.clear();
-                            }
-                            mBannerList.add(headLineBean);
-                        }
-                    }
-                }
-                setAdapter();
-                initBannerImage();
             }
 
             @Override
@@ -169,6 +154,36 @@ public class NewsFragment extends BaseFragment<FragmentNewsBinding> implements B
                 NewsFragment.this.addSubscription(subscription);
             }
         });
+    }
+
+    private void setNewsList(NewsBean mNewsBean) {
+        int size = mNewsBean.getHeadLineBean().size();
+        if (null == mHeadLineList) {
+            mHeadLineList = new ArrayList<NewsBean.HeadLineBean>();
+        } else {
+            mHeadLineList.clear();
+        }
+
+        for (int i = 0; i < size; i++) {
+            NewsBean.HeadLineBean headLineBean = mNewsBean.getHeadLineBean().get(i);
+            if (null != headLineBean) {
+                mHeadLineList.add(headLineBean);
+            }
+        }
+
+        if (null != mHeadLineList && mHeadLineList.size() > 0) {
+            for (NewsBean.HeadLineBean headLineBean : mHeadLineList) {
+                if (null != headLineBean && null != headLineBean.getAds() && headLineBean.getAds().size() > 0) {
+                    if (null == mBannerList) {
+                        mBannerList = new ArrayList<NewsBean.HeadLineBean>();
+                    } else {
+                        mBannerList.clear();
+                    }
+                    mBannerList.add(headLineBean);
+                }
+            }
+        }
+
     }
 
     private void setAdapter() {
@@ -190,8 +205,6 @@ public class NewsFragment extends BaseFragment<FragmentNewsBinding> implements B
                 for (int j = 0; j < headLine.getAds().size(); j++) {
                     bannerImages.add(headLine.getAds().get(j).getImgsrc());
                     bannerTitles.add(headLine.getAds().get(j).getTitle());
-                    LogUtil.print("bannerImages:" + headLine.getAds().get(j).getImgsrc());
-                    LogUtil.print("bannerTitles:" + headLine.getAds().get(j).getTitle());
                 }
             }
         }
@@ -200,8 +213,8 @@ public class NewsFragment extends BaseFragment<FragmentNewsBinding> implements B
     }
 
     @Override
-    protected void onRefresh() {
-        super.onRefresh();
+    protected void onRefreshInError() {
+        super.onRefreshInError();
         loadData();
     }
 
@@ -246,6 +259,106 @@ public class NewsFragment extends BaseFragment<FragmentNewsBinding> implements B
         super.onInvisible();
         if (null != mHeaderBinding && null != mHeaderBinding.headerBanner) {
             mHeaderBinding.headerBanner.stopAutoPlay();
+        }
+    }
+
+    /**
+     * 下来刷新
+     */
+    @Override
+    public void onRefresh() {
+        mNewsViewModel.loadNews(0, new RequestCallBack() {
+            @Override
+            public void loadSuccess(Object object) {
+                showContent();
+                bindingView.newsRecyclerView.refreshComplete();
+                NewsBean mNewsBean = (NewsBean) object;
+                if (null != mNewsBean) {
+                    setNewsList(mNewsBean);
+                    mNewsListAdapter.notifyDataSetChanged();
+                    mHeaderBinding.headerBanner.setData(bannerImages, bannerTitles);
+                    mHeaderBinding.headerBanner.startAutoPlay();
+                }
+            }
+
+            @Override
+            public void loadFailed() {
+                isFreshOrLoadError = true;
+                showLoadingError();
+            }
+
+            @Override
+            public void addSubscription(Subscription subscription) {
+                NewsFragment.this.addSubscription(subscription);
+            }
+        });
+    }
+
+    /**
+     * 上拉加载
+     */
+    @Override
+    public void onLoadMore() {
+        mStartIndex += 20;
+        mNewsViewModel.loadNews(mStartIndex, new RequestCallBack() {
+            @Override
+            public void loadSuccess(Object object) {
+                showContent();
+                bindingView.newsRecyclerView.loadMoreComplete();
+                NewsBean mNewsBean = (NewsBean) object;
+
+                if (null != mNewsBean) {
+                    setLoadMoreNewsList(mNewsBean);
+                    if (null != mHeadLineList && mHeadLineList.size() > 0) {
+                        mHeadLineList.addAll(mLoadMoreHeadLineList);
+                        mNewsListAdapter.notifyDataSetChanged();
+                        mHeaderBinding.headerBanner.setData(bannerImages, bannerTitles);
+                        mHeaderBinding.headerBanner.startAutoPlay();
+                    }
+                }
+            }
+
+            @Override
+            public void loadFailed() {
+                isFreshOrLoadError = true;
+                showLoadingError();
+
+            }
+
+            @Override
+            public void addSubscription(Subscription subscription) {
+                NewsFragment.this.addSubscription(subscription);
+            }
+        });
+
+    }
+
+    private void setLoadMoreNewsList(NewsBean mNewsBean) {
+        int size = mNewsBean.getHeadLineBean().size();
+        if (null == mLoadMoreHeadLineList) {
+            mLoadMoreHeadLineList = new ArrayList<NewsBean.HeadLineBean>();
+        } else {
+            mLoadMoreHeadLineList.clear();
+        }
+
+        for (int i = 0; i < size; i++) {
+            NewsBean.HeadLineBean headLineBean = mNewsBean.getHeadLineBean().get(i);
+            if (null != headLineBean) {
+                mLoadMoreHeadLineList.add(headLineBean);
+            }
+        }
+
+        if (null != mLoadMoreHeadLineList && mLoadMoreHeadLineList.size() > 0) {
+            for (NewsBean.HeadLineBean headLineBean : mLoadMoreHeadLineList) {
+                if (null != headLineBean && null != headLineBean.getAds() && headLineBean.getAds().size() > 0) {
+                    if (null == mBannerList) {
+                        mBannerList = new ArrayList<NewsBean.HeadLineBean>();
+                    } else {
+                        mBannerList.clear();
+                    }
+                    mBannerList.add(headLineBean);
+                }
+            }
         }
     }
 }

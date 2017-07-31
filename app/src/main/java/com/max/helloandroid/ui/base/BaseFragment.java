@@ -83,7 +83,7 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
             @Override
             protected void onNoRepeatClick(View v) {
                 showLoading();
-                onRefresh();
+                onRefreshInError();
             }
         });
     }
@@ -91,7 +91,7 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
     /**
      * 加载失败后刷新
      */
-    protected void onRefresh() {
+    protected void onRefreshInError() {
 
     }
 
