@@ -34,23 +34,23 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
     @Override
     protected void initView() {
         initToolbar((Toolbar) mainBinding.includeToolbar.findViewById(R.id.toolbar), "主页");
-        initBottomNavigationBar();
         initViewPager();
+        initBottomNavigationBar();
     }
 
     private void initBottomNavigationBar() {
-        mainBinding.bottomNavigationBar.setTabSelectedListener(this);
         mainBinding.bottomNavigationBar.clearAll();
         mainBinding.bottomNavigationBar.setActiveColor(R.color.colorNavigationBar);
         mainBinding.bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         mainBinding.bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
-        mainBinding.bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         mainBinding.bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.mipmap.ico_news_normal, getString(R.string.news)))
                 .addItem(new BottomNavigationItem(R.mipmap.ico_reading_normal, getString(R.string.reading)))
                 .addItem(new BottomNavigationItem(R.mipmap.ico_music_normal, getString(R.string.music)))
                 .addItem(new BottomNavigationItem(R.mipmap.ico_video_normal, getString(R.string.video)))
+                .setFirstSelectedPosition(0)
                 .initialise();
+        mainBinding.bottomNavigationBar.setTabSelectedListener(this);
     }
 
     private void initViewPager() {
@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
         myFragmentPagerAdapter = new MyFragmentPagerAdapter(this.getSupportFragmentManager(), fragmentList);
         mainBinding.viewPager.setAdapter(myFragmentPagerAdapter);
         mainBinding.viewPager.addOnPageChangeListener(this);
-        mainBinding.viewPager.setOffscreenPageLimit(2);
+        mainBinding.viewPager.setOffscreenPageLimit(fragmentList.size());
         mainBinding.viewPager.setCurrentItem(0);
     }
 
@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar
         ReadingFragment readingFragment = new ReadingFragment();
         MusicFragment musicFragment = new MusicFragment();
         VideoFragment videoFragment = new VideoFragment();
-
+        fragmentList.clear();
         fragmentList.add(newsFragment);
         fragmentList.add(readingFragment);
         fragmentList.add(musicFragment);

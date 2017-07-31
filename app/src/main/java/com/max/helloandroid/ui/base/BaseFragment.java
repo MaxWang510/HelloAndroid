@@ -32,8 +32,8 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View ll = inflater.inflate(R.layout.fragment_base, null);
-        bindingView = DataBindingUtil.inflate(getActivity().getLayoutInflater(), setContent(), null, false);
+        View ll = inflater.inflate(R.layout.fragment_base, container, false);
+        bindingView = DataBindingUtil.inflate(getActivity().getLayoutInflater(), setContent(), container, false);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         bindingView.getRoot().setLayoutParams(params);
         mContainer = (RelativeLayout) ll.findViewById(R.id.container);
@@ -156,6 +156,7 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
 
     /**
      * 添加订阅
+     *
      * @param s
      */
     public void addSubscription(Subscription s) {

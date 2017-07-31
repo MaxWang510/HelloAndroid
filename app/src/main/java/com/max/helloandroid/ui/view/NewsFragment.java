@@ -132,6 +132,8 @@ public class NewsFragment extends BaseFragment<FragmentNewsBinding> implements B
                 int size = mNewsBean.getHeadLineBean().size();
                 if (null == mHeadLineList) {
                     mHeadLineList = new ArrayList<NewsBean.HeadLineBean>();
+                } else {
+                    mHeadLineList.clear();
                 }
 
                 for (int i = 0; i < size; i++) {
@@ -146,6 +148,8 @@ public class NewsFragment extends BaseFragment<FragmentNewsBinding> implements B
                         if (null != headLineBean && null != headLineBean.getAds() && headLineBean.getAds().size() > 0) {
                             if (null == mBannerList) {
                                 mBannerList = new ArrayList<NewsBean.HeadLineBean>();
+                            } else {
+                                mBannerList.clear();
                             }
                             mBannerList.add(headLineBean);
                         }
@@ -227,5 +231,21 @@ public class NewsFragment extends BaseFragment<FragmentNewsBinding> implements B
     public void onItemClick(View v, int position) {
         LogUtil.print("+++++++++++++" + position);
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (null != mHeaderBinding.headerBanner) {
+            mHeaderBinding.headerBanner.stopAutoPlay();
+        }
+    }
+
+    @Override
+    protected void onInvisible() {
+        super.onInvisible();
+        if (null != mHeaderBinding && null != mHeaderBinding.headerBanner) {
+            mHeaderBinding.headerBanner.stopAutoPlay();
+        }
     }
 }

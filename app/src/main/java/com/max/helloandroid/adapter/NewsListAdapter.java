@@ -2,6 +2,7 @@ package com.max.helloandroid.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,31 +22,27 @@ import java.util.List;
 
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.BaseViewHolder> {
     private Context mContext;
-    //    private static final int BIG_IMG = 0;
     private static final int SMALL_IMG = 1;
     private static final int THREE_IMG = 2;
     private List<NewsBean.HeadLineBean> mHeadLineBeanList;
     private OnItemClickListener mOnItemClickListener;
+    private LayoutInflater mLayoutInflater;
 
     public NewsListAdapter(Context mContext, List<NewsBean.HeadLineBean> mHeadLineBeanList) {
         this.mContext = mContext;
         this.mHeadLineBeanList = mHeadLineBeanList;
+        mLayoutInflater = LayoutInflater.from(mContext);
     }
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // 根据viewType返回不同的view，此viewtype从getItemViewType方法中获得
-        View view;
-
-//        if (viewType == BIG_IMG) {
-//            view = View.inflate(mContext, R.layout.item_news_big_pic, null);
-//            return new BigImgViewHolder(view);
-//        } else
+        View view = null;
         if (viewType == THREE_IMG) {
-            view = View.inflate(mContext, R.layout.item_news_three_pic, null);
+            view = mLayoutInflater.inflate(R.layout.item_news_three_pic, parent, false);
             return new ThreeImgViewHolder(view);
         } else {
-            view = View.inflate(mContext, R.layout.item_news_normal, null);
+            view = mLayoutInflater.inflate(R.layout.item_news_normal, parent, false);
             return new SmallImgViewHolder(view);
         }
     }
@@ -59,17 +56,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.BaseVi
         String title = headLineBean.getTitle();
         String source = headLineBean.getSource();
         String postTime = headLineBean.getPtime();
-
-//        if (getItemViewType(position) == BIG_IMG) {
-//            // 一张大图的情况
-//            BigImgViewHolder bigImgViewHolder = (BigImgViewHolder) holder;
-//            Glide.with(mContext)
-//                    .load(imageSrc)
-//                    .placeholder(R.mipmap.im_default_bg)
-//                    .crossFade()
-//                    .into(bigImgViewHolder.big_Image);
-//
-//        } else
 
         if (getItemViewType(position) == THREE_IMG) {
             ThreeImgViewHolder threeImgViewHolder = (ThreeImgViewHolder) holder;
@@ -112,11 +98,8 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.BaseVi
     public int getItemViewType(int position) {
         int viewType = SMALL_IMG;
         NewsBean.HeadLineBean headLineBean = mHeadLineBeanList.get(position);
-        int hasAd = headLineBean.getHasAD();
         List<NewsBean.HeadLineBean.ImgextraBean> imgextraBeanlist = headLineBean.getImgextra();
-        if (hasAd == 1) {
-//            viewType = BIG_IMG;
-        } else if (imgextraBeanlist != null && imgextraBeanlist.size() > 1) {
+        if (imgextraBeanlist != null && imgextraBeanlist.size() > 1) {
             viewType = THREE_IMG;
         }
         return viewType;
@@ -163,18 +146,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.BaseVi
         }
     }
 
-    /**
-     * 一张图片的布局
-     */
-//    class BigImgViewHolder extends BaseViewHolder {
-//
-//        public ImageView big_Image;
-//
-//        public BigImgViewHolder(View itemView) {
-//            super(itemView);
-//            big_Image = (ImageView) itemView.findViewById(R.id.big_Image);
-//        }
-//    }
 
     /**
      * 拥有三张图片的布局
